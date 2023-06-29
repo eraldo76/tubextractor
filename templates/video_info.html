@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<body>
+    <h1>YouTube Video Info</h1>
+    {% if video_info %}
+        <p><strong>Transcript:</strong> {{ video_info.transcript }}</p>
+        <p><strong>Tags:</strong> {{ video_info.tags | join(', ') }}</p>
+    {% else %}
+        <p>No video info available.</p>
+    {% endif %}
+</body>
+</html>
