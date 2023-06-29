@@ -1,3 +1,4 @@
 /youvenv/
 settings.py
 app.log
+__pycache__
