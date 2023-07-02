@@ -4,3 +4,4 @@ app.log
 __pycache__
 /temp/
 /sessionfile/
+/flask_session/

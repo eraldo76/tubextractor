@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file, session
+from flask_session import Session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -9,8 +10,19 @@ import logging
 import re
 from urllib.parse import urlparse, parse_qs
 from contextlib import suppress
+import youtube_dl
+import json
+import os
+import isodate
+
 
 app = Flask(__name__)
+
+# Configure the session
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__)
+Session(app)
+
 app.config['SECRET_KEY'] = SECRET_KEY
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG,
@@ -25,13 +37,25 @@ class VideoForm(FlaskForm):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = VideoForm()
-    return render_template('index.html', form=form)
+    video_info = {}  # Initialize the variable video_info as an empty dictionary
+    if form.validate_on_submit():
+        video_url = form.video_id.data
+        payload = {'video_id': video_url}
+        headers = {'Content-Type': 'application/json'}
+        base_url = request.base_url  # Get the current base URL
+        response = requests.post(
+            f"{base_url}get_video_info", data=json.dumps(payload), headers=headers)
+        video_info = response.json()
+    return render_template('index.html', form=form, video_info=video_info)
 
 
 @app.route('/get_video_info', methods=['POST'])
-def get_video_info():
+def fetch_video_info():
     video_url = request.form.get('video_id')
     video_id = get_youtube_video_id(video_url)
+
+    # Save the video_id in the session
+    session['video_id'] = video_id
 
     if video_id:
         # Try to get video transcript
@@ -41,19 +65,57 @@ def get_video_info():
         except NoTranscriptFound:
             transcript = "Nessuna trascrizione disponibile per il video specificato."
 
-        # Eseguiamo la richiesta API per ottenere le informazioni del video
-        api_url = f"https://www.googleapis.com/youtube/v3/videos?part=snippet&id={video_id}&key={YOUTUBE_API_KEY}"
+        # We run the API request to get the video information
+        api_url = f"https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id={video_id}&key={YOUTUBE_API_KEY}"
         response = requests.get(api_url)
         data = response.json()
 
-        # Otteniamo i tag del video
+        # We get the title
+        title = data['items'][0]['snippet']['title']
+
+        # Get the video's thumbnail URL
+        thumbnail_url = data['items'][0]['snippet']['thumbnails']['medium']['url']
+
+        # We get the name of the channel or author who posted the video
+        channel_title = data['items'][0]['snippet']['channelTitle']
+
+        duration = data['items'][0]['contentDetails']['duration']
+        duration_timedelta = isodate.parse_duration(duration)
+
+        # We get the video tags
         try:
             tags = data['items'][0]['snippet']['tags']
         except KeyError:
             tags = "Impossibile trovare i tag per il video specificato."
 
-        video_info = {'transcript': transcript, 'tags': tags}
-        return jsonify(video_info)
+        # Get the available video formats
+        ydl_opts = {
+            'ignoreerrors': True,
+        }
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(video_id, download=False)
+            formats = info_dict.get('formats') if info_dict else []
+
+            format_info = []
+            for format in formats:
+                if format["acodec"] == "none":  # We only want video formats
+                    format_info.append({
+                        'format_id': format["format_id"],
+                        'format_note': format["format_note"],
+                        'ext': format["ext"],
+                        'url': format['url']  # Add the direct download URL
+                    })
+
+        video_info = {
+            'transcript': transcript,
+            'tags': tags,
+            'title': title,
+            'channel_title': channel_title,
+            'thumbnail': thumbnail_url,
+            'duration': str(duration_timedelta),
+            'formats': format_info,
+        }
+        return jsonify(video_info) if video_info else jsonify({'error': 'Impossibile ottenere le informazioni del video'})
     else:
         return jsonify({'error': 'URL del video non valido'})
 
@@ -70,18 +132,51 @@ def get_youtube_video_id(url):
         if query.path == '/watch':
             video_id = parse_qs(query.query)['v'][0]
         if query.path[:7] == '/watch/':
-            video_id = query.path.split('/')[1]
+            video_id = query.path.split('/')[2]
         if query.path[:7] == '/embed/':
             video_id = query.path.split('/')[2]
         if query.path[:3] == '/v/':
             video_id = query.path.split('/')[2]
 
     if video_id:
-        logging.debug(f"ID del video: {video_id}")
+        logging.debug(f"Video ID: {video_id}")
     else:
-        logging.debug("Nessun ID video estratto")
+        logging.debug("No video ID extracted")
 
     return video_id
+
+
+@app.route('/download_video/<format_id>', methods=['GET'])
+def download_video(format_id):
+    # We use the video_id from the session here
+    video_id = session.get('video_id', None)
+
+    # If we don't have a video_id, we can't continue
+    if not video_id:
+        return jsonify({'error': 'Nessun video selezionato'}), 400
+
+    # Define youtube-dl options
+    ydl_opts = {
+        'format': format_id,  # Use the format chosen by the user
+        'outtmpl': 'temp/%(id)s.%(ext)s'  # Save the file in the /temp folder
+    }
+
+    # Download the video
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        try:
+            info_dict = ydl.extract_info(video_id, download=True)
+            filename = ydl.prepare_filename(info_dict)
+        except Exception as e:
+            app.logger.error(f"Error downloading video: {str(e)}")
+            return jsonify({'error': 'Errore nel download del video'}), 500
+
+    # If the file was downloaded successfully, send it to the user
+    try:
+        return send_file(filename, as_attachment=True)
+    finally:
+        # After sending the file to the user, remove it from the server
+        if os.path.exists(filename):
+            os.remove(filename)
 
 
 # main
