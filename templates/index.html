@@ -107,19 +107,32 @@
           <section class="m-5" id="video-info2" style="display: none;">
             <div class="row m-5 justify-content-center">
               <div class="col-md-6 col-sm-12 text-center mb-3">
-                <img src="{{ url_for('static', filename='img/paper-writing.svg') }}" alt="icon transcript" width="64px" class="mb-3">
+                <img src="{{ url_for('static', filename='img/paper-writing.svg') }}" alt="icon transcript Tubextractor" width="64px" class="mb-3">
                 <textarea id="transcription-textarea" class="form-control mb-2 w-100" rows="5"></textarea>
                 <button class="btn btn-pink-moon w-100 p-3" id="copy-transcription-btn">Copy Transcript</button>
               </div>
               <div class="col-md-6 col-sm-12 text-center">
-                <img src="{{ url_for('static', filename='img/tags.svg') }}" alt="logo Tubextractor" width="64px" class="mb-3">
+                <img src="{{ url_for('static', filename='img/tags.svg') }}" alt="icon tags Tubextractor" width="64px" class="mb-3">
                 <textarea id="tags-textarea" class="form-control mb-2 w-100" rows="5"></textarea>
                 <button class="btn btn-pink-moon w-100 p-3" id="copy-tags-btn">Copy Tags</button>
               </div>
             </div>
           </section>
-          
-          
+          <!-- Add section for audio download-->
+          <section id="audio-info" style="display: none;">
+            <div class="container bg-light text-dark p-5 rounded-3">
+              <div class="row mb-5">
+                <div class="col-sm-8 col-lg-4 mb-3">
+                  <img src="{{ url_for('static', filename='img/tubextractor_video_to_mp3.png') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+                                  </div>
+                <div  class="col-sm-4 col-lg-8"> 
+                  <h2 class="h3 mb-12 w-100"> Video to mp3</h2>
+                  <p class="lead mb-3">Testo che inviti allo scaricamento del file audio</p>
+                     <a href="/download_audio" download>
+                    <button class="btn btn-pink-moon btn-lg btn-block w-100 p-3">
+                      <i class="fas fa-download"></i> Download MP3</button>
+                </a>
+        
           
         </div>
       </div>
@@ -159,11 +172,11 @@
         var videoId = get_youtube_video_id(videoUrl);
 
         fetch('/get_video_info', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'video_id=' + encodeURIComponent(videoUrl)
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({video_id: videoId})
         })
             .then(function (response) {
                 loader.style.display = 'none';
@@ -214,6 +227,7 @@
                 // Show the results section
                 document.querySelector('#video-info').style.display = 'block';
                 document.querySelector('#video-info2').style.display = 'block';
+                document.querySelector('#audio-info').style.display = 'block';
 
                 // Clear the form for a new search
                 document.querySelector('.js-ajax-form').reset();
