@@ -1,5 +1,4 @@
 /youvenv/
-settings.py
 app.log
 __pycache__
 /temp/
