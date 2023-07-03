@@ -264,7 +264,13 @@
  // Add the event listeners for audio
     document.querySelector('#download-audio').addEventListener('click', function () {
     document.querySelector('#loading-message-audio').style.display = 'block';
+   // Nascondi la scritta "Loading..." dopo 30 secondi
+   setTimeout(function () {
+    document.querySelector('#loading-message-audio').style.display = 'none';
+  }, 15000); // 15000 millisecondi corrispondono a 15 secondi
+
 });
+
 
 </script>
 

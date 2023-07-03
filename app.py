@@ -105,7 +105,7 @@ def fetch_video_info():
 
             format_info = []
             for format in formats:
-                if format["acodec"] == "none":  # We only want video formats
+                if format["acodec"] != "none":  # We want video formats with audio
                     format_info.append({
                         'format_id': format["format_id"],
                         'format_note': format["format_note"],
