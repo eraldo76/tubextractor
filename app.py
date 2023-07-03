@@ -51,14 +51,25 @@ def index():
 
 @app.route('/get_video_info', methods=['POST'])
 def fetch_video_info():
-    video_url = request.json.get('video_id')
-    logging.debug(f"Fetching video info for URL: {video_url}")
-    video_id = video_url
+    video_id_or_url = request.json.get('video_id')
+    logging.debug(f"Fetching video info for ID or URL: {video_id_or_url}")
 
-    logging.debug(f"Video URL: {video_url}")  # Usa logging qui
+    # Check if video_id_or_url is a URL and, if so, extract the video ID
+    if 'http' in video_id_or_url:
+        video_id = get_youtube_video_id(video_id_or_url)
+    else:
+        video_id = video_id_or_url
+
+    logging.debug(f"Video ID: {video_id}")
 
     # Save the video_id in the session
     session['video_id'] = video_id
+
+    if video_id is None:
+        return jsonify({'error': 'URL del video non valido'})
+
+    # rest of your code follows
+    ...
 
     if video_id:
        # Try to get video transcript
@@ -128,8 +139,12 @@ def fetch_video_info():
 
 
 def get_youtube_video_id(url):
+    logging.debug(f"get_youtube_video_id called with url: {url}")
     query = urlparse(url)
     video_id = None
+
+    logging.debug(f"query.hostname: {query.hostname}")
+    logging.debug(f"query.path: {query.path}")
 
     if query.hostname == 'youtu.be':
         video_id = query.path[1:]
