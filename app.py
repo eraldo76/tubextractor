@@ -209,17 +209,17 @@ def download_audio():
         try:
             info_dict = ydl.extract_info(video_id, download=True)
             filename = ydl.prepare_filename(info_dict)
+            converted_filename = filename.rsplit(".", 1)[0] + ".mp3"
+
+            # If the file was downloaded successfully, send it to the user
+            return send_file(converted_filename, mimetype='audio/mpeg', as_attachment=True)
         except Exception as e:
             app.logger.error(f"Error downloading audio: {str(e)}")
             return jsonify({'error': 'Errore nel download dell\'audio'}), 500
-
-    # If the file was downloaded successfully, send it to the user
-    try:
-        return send_file(converted_filename, as_attachment=True)
-    finally:
-        # After sending the file to the user, remove it from the server
-        if os.path.exists(converted_filename):
-            os.remove(converted_filename)
+        finally:
+            # After sending the file to the user, remove it from the server
+            if os.path.exists(converted_filename):
+                os.remove(converted_filename)
 
 
 # main

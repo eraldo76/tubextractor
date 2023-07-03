@@ -129,12 +129,12 @@
                   <h2 class="h3 mb-12 w-100"> Video to mp3</h2>
                   <p class="lead mb-3">Testo che inviti allo scaricamento del file audio</p>
                      <a href="/download_audio" download>
-                    <button class="btn btn-pink-moon btn-lg btn-block w-100 p-3">
-                      <i class="fas fa-download"></i> Download MP3</button>
-                </a>
-        
-          
-        </div>
+                      <button id="download-audio" class="btn btn-pink-moon btn-lg btn-block w-100 p-3">
+                        <i class="fas fa-download"></i> Download MP3
+                    </button>
+                </a><br>
+                <p id="loading-message-audio" style="display: none;">Loading...</p>
+       </div>
       </div>
     </div>
   </section>
@@ -261,6 +261,11 @@
         document.body.removeChild(textarea);
         alert('Text copied to clipboard!');
     }
+ // Add the event listeners for audio
+    document.querySelector('#download-audio').addEventListener('click', function () {
+    document.querySelector('#loading-message-audio').style.display = 'block';
+});
+
 </script>
 
 
