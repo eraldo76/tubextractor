@@ -153,13 +153,20 @@
   <!-- Custom script -->
   <script>
     function get_youtube_video_id(url) {
-        var video_id = url.split('v=')[1];
+    var video_id;
+    if (url.includes('youtu.be')) {
+        // Handle https://youtu.be/<video_id> format
+        video_id = url.split('youtu.be/')[1];
+    } else {
+        // Handle https://www.youtube.com/watch?v=<video_id> format
+        video_id = url.split('v=')[1];
         var ampersandPosition = video_id.indexOf('&');
         if (ampersandPosition != -1) {
             video_id = video_id.substring(0, ampersandPosition);
         }
-        return video_id;
     }
+    return video_id;
+}
 
     document.querySelector('.js-ajax-form').addEventListener('submit', function (event) {
         event.preventDefault();
@@ -177,6 +184,13 @@
 
         var videoUrl = document.querySelector('input[name="video_id"]').value;
         var videoId = get_youtube_video_id(videoUrl);
+
+       // Push the URL to dataLayer
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'video_url_entered',
+          'video_url': videoUrl
+        });
 
         fetch('/get_video_info', {
         method: 'POST',
