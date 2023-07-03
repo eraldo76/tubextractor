@@ -4,3 +4,5 @@ __pycache__
 /temp/
 /sessionfile/
 /flask_session/
+static/.DS_Store
+.DS_Store
