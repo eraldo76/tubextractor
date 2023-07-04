@@ -2,10 +2,24 @@
 <html lang="en">
 
 <head>
-  <meta name="description" content="Experience the power of TubExtractor.com - your comprehensive, free online tool for YouTube content. Extract and download video transcripts, tags, video title, and channel information or get the video itself in your preferred format. Ideal for content creators, SEO specialists, video enthusiasts, and those in need of offline access to their favorite videos!">
+  <meta name="description" content="Unlock YouTube content with TubExtractor.com. Extract video transcripts, tags, title, channel info, download in preferred formats, or convert to MP3. Ideal for creators, SEOs, and video lovers.">
   <meta charset="utf-8">
   <title>TubExtractor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Favicon generale -->
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+  <!-- Favicon per dispositivi Apple -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+
+  <!-- Favicon per Android / Chrome -->
+  <link rel="icon" type="image/png" sizes="192x192"  href="{{ url_for('static', filename='img/android-chrome-192x192.png') }}">
+  <link rel="icon" type="image/png" sizes="512x512"  href="{{ url_for('static', filename='img/android-chrome-512x512.png') }}">
+
+  <!-- Favicon per desktop generali -->
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
+
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -60,12 +74,12 @@
         </div>
         <div class="col-md-9 col-lg-7 col-xl-6 col-xxl-5 mb-10">
           
-          <p class="lead mb-3" data-aos="fade-down" data-aos-delay="150">
-            Whether you need the video transcript, tags, or even the video title and channel information, TubExtractor has got you covered.
-            <span class="text-nowrap"></span>
-          </p>
+          <p class="lead mb-3">
+            Download videos, transcripts, tags or convert Video to MP3. Perfect for creators and SEO experts
+           </p>
         </div>
       </div>
+      <br>
       <form method="post" enctype="multipart/form-data" class="js-ajax-form mb-10">
         {{ form.hidden_tag() }}
         <div class="row justify-content-center text-md-center">
@@ -80,10 +94,10 @@
         </div>
     </form>
       <div id="loader" style="display: none;">
-        <br><br>
-        <p class="h4 mb-3">loading...</p>
-      </div>
-    
+        <p class="h4 m-5">loading...</p>
+          </div>
+          <p id="error-message" style="color: red;"></p>
+
       </div>
     </section>
 <br>
@@ -107,7 +121,7 @@
                 <i class="fas fa-download"></i> Download
             </button>
             <div id="loading-message" style="display: none;">
-              <p>loading...</p>
+              <p class="m-5">loading...</p>
           </div>
                   </section>
              
@@ -137,8 +151,8 @@
                                   </div>
                 <div  class="col-sm-4 col-lg-8"> 
                   <h2 class="h3 mb-12 w-100"> Video to mp3</h2>
-                  <p class="lead mb-3">Testo che inviti allo scaricamento del file audio</p>
-                     <a href="/download_audio" download>
+                  <p class="lead mb-3">Experience seamless conversion of your favorite YouTube videos to high-quality MP3 audio files. Perfect for offline listening, podcast creation, or any other audio-focused project. Start your audio adventure with TubExtractor.</p>
+   <a href="/download_audio" download>
                       <button id="download-audio" class="btn btn-pink-moon btn-lg btn-block w-100 p-3">
                         <i class="fas fa-download"></i> Download MP3
                     </button>
@@ -157,12 +171,17 @@
   
   <!-- Custom script -->
   <script>
+    var videoId;
+    var loadingMessage = document.querySelector('#loading-message');
+    var downloadButton = document.querySelector('#download-button');
+    var errorMessageElement = document.querySelector('#error-message');
+
     function get_youtube_video_id(url) {
         var video_id;
         if (url.includes('youtu.be')) {
             // Handle https://youtu.be/<video_id> format
             video_id = url.split('youtu.be/')[1];
-        } else {
+        } else if (url.includes('youtube.com/watch')) {
             // Handle https://www.youtube.com/watch?v=<video_id> format
             video_id = url.split('v=')[1];
             var ampersandPosition = video_id.indexOf('&');
@@ -173,16 +192,17 @@
         return video_id;
     }
 
-    var videoId;
-    var loadingMessage = document.querySelector('#loading-message');
-    var downloadButton = document.querySelector('#download-button');
-
+    function validateYouTubeUrl(url) {
+        var youtubeUrlRegex = /^https?:\/\/(www\.)?(youtube\.com\/watch\?v=[^&]+|youtu\.be\/[^&]+)/;
+        return youtubeUrlRegex.test(url);
+    }
     document.querySelector('.js-ajax-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        // Clear the results from the previous search
+        // Clear the results from the previous search and any error message
         document.querySelector('#transcription-textarea').value = '';
         document.querySelector('#tags-textarea').value = '';
+        errorMessageElement.textContent = '';
 
         var loader = document.querySelector('#loader');
         loader.style.display = 'block';
@@ -190,6 +210,14 @@
         downloadButton.disabled = true;
 
         var videoUrl = document.querySelector('input[name="video_id"]').value;
+if (!validateYouTubeUrl(videoUrl)) {
+    errorMessageElement.textContent = 'Invalid YouTube URL. Please enter a valid URL, such as https://www.youtube.com/watch?v=abc123 or https://youtu.be/abc123';
+    loader.style.display = 'none';
+    downloadButton.disabled = false;
+    return;
+}
+
+
         videoId = get_youtube_video_id(videoUrl);
 
         // Push the URL to dataLayer
