@@ -14,7 +14,7 @@ import youtube_dl
 import json
 import os
 import isodate
-
+from flask_minify import minify
 
 app = Flask(__name__)
 
@@ -236,6 +236,9 @@ def download_audio():
             if os.path.exists(converted_filename):
                 os.remove(converted_filename)
 
+
+# Initialize Flask-Minify
+minify(app=app)
 
 # main
 if __name__ == "__main__":
