@@ -291,7 +291,38 @@
   }, 15000); // 15000 millisecondi corrispondono a 15 secondi
 
 });
+   // Aggiungi i listener di eventi per ogni pulsante
+   document.querySelector('#download-button').addEventListener('click', function () {
+      window.dataLayer.push({
+          'event': 'button_click',
+          'button_name': 'download_video',
+          'click_time': new Date().getTime()
+      });
+  });
 
+  document.querySelector('#copy-transcription-btn').addEventListener('click', function () {
+      window.dataLayer.push({
+          'event': 'button_click',
+          'button_name': 'copy_transcription',
+          'click_time': new Date().getTime()
+      });
+  });
+
+  document.querySelector('#copy-tags-btn').addEventListener('click', function () {
+      window.dataLayer.push({
+          'event': 'button_click',
+          'button_name': 'copy_tags',
+          'click_time': new Date().getTime()
+      });
+  });
+
+  document.querySelector('#download-audio').addEventListener('click', function () {
+      window.dataLayer.push({
+          'event': 'button_click',
+          'button_name': 'download_audio',
+          'click_time': new Date().getTime()
+      });
+  });
 
 </script>
 
