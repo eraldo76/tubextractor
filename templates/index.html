@@ -254,29 +254,31 @@
     });
 
     function handleDownloadButtonClick() {
-        // Get the selected format
-        var selectedFormat = document.querySelector('#format-select').value;
-        if (!selectedFormat) return; // If no format is selected, do nothing
-        // Show the loading message
-        loadingMessage.style.display = 'block';
-        downloadButton.disabled = true; // Disable the download button during the download process
+    // Get the selected format
+    var selectedFormat = document.querySelector('#format-select').selectedOptions[0];
+    if (!selectedFormat) return; // If no format is selected, do nothing
+    // Show the loading message
+    loadingMessage.style.display = 'block';
+    downloadButton.disabled = true; // Disable the download button during the download process
 
-        // Push the selected format to dataLayer
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            'event': 'download_button_clicked',
-            'selected_format': selectedFormat,
-            'click_time': new Date().getTime()
-        });
+    // Push the selected format to dataLayer
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        'event': 'download_button_clicked',
+        'selected_format_id': selectedFormat.value,
+        'selected_format_text': selectedFormat.textContent,
+        'click_time': new Date().getTime()
+    });
 
-        // Redirect to the download URL
-        window.location.href = '/download_video/' + selectedFormat + '?video_id=' + videoId;
-        // Enable the download button after a short delay (adjust the delay as needed)
-        setTimeout(function () {
-            loadingMessage.style.display = 'none'; // Hide the loading message after the download
-            downloadButton.disabled = false;
-        }, 1000);
-    }
+    // Redirect to the download URL
+    window.location.href = '/download_video/' + selectedFormat.value + '?video_id=' + videoId;
+    // Enable the download button after a short delay (adjust the delay as needed)
+    setTimeout(function () {
+        loadingMessage.style.display = 'none'; // Hide the loading message after the download
+        downloadButton.disabled = false;
+    }, 1000);
+}
+
 
     // Add the event listeners for copying the transcript and tags
     document.querySelector('#copy-transcription-btn').addEventListener('click', function () {
