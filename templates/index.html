@@ -18,8 +18,9 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <!-- Google Fonts -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}">
-  <!--font Style -->
+  <link rel="preload" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}" as="style">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}" media="print" onload="this.media='all'">
+   <!--font Style -->
   <style>
     body.font-family {
       font-family: 'DM Sans', sans-serif;
