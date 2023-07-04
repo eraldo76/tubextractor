@@ -50,7 +50,7 @@
     <div class="container p-1 mb-5">
       <div class="row justify-content-center text-md-center">
         <div class="col-lg-10 col-xl-8 mb-0">
-          <img src="{{ url_for('static', filename='img/tubextractor.png') }}" alt="logo Tubextractor" width="200px">
+          <img src="{{ url_for('static', filename='img/tubextractor.png') }}" alt="logo Tubextractor" width="200px" height="200px">
           <h1>
             TubExtractor
           </h1>
@@ -294,13 +294,17 @@
 
 });
    // Aggiungi i listener di eventi per ogni pulsante
-   document.querySelector('#download-button').addEventListener('click', function () {
-      window.dataLayer.push({
-          'event': 'button_click',
-          'button_name': 'download_video',
-          'click_time': new Date().getTime()
-      });
+document.querySelector('#download-button').addEventListener('click', function () {
+ 
+
+  window.dataLayer.push({
+    'event': 'button_click',
+    'button_name': 'download_video',
+    'click_time': new Date().getTime(),
+    'selected_format': selectedFormat
   });
+});
+
 
   document.querySelector('#copy-transcription-btn').addEventListener('click', function () {
       window.dataLayer.push({
@@ -325,6 +329,7 @@
           'click_time': new Date().getTime()
       });
   });
+  
 
 </script>
 
