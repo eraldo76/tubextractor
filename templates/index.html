@@ -282,11 +282,21 @@
     document.querySelector('#copy-transcription-btn').addEventListener('click', function () {
         var transcriptionText = document.querySelector('#transcription-textarea').value;
         copyToClipboard(transcriptionText);
+        window.dataLayer.push({
+            'event': 'button_click',
+            'button_name': 'copy_transcription',
+            'click_time': new Date().getTime()
+        });
     });
 
     document.querySelector('#copy-tags-btn').addEventListener('click', function () {
         var tagsText = document.querySelector('#tags-textarea').value;
         copyToClipboard(tagsText);
+        window.dataLayer.push({
+            'event': 'button_click',
+            'button_name': 'copy_tags',
+            'click_time': new Date().getTime()
+        });
     });
 
     // Utility function for copying text to clipboard
@@ -303,12 +313,20 @@
     // Add the event listeners for audio
     document.querySelector('#download-audio').addEventListener('click', function () {
         document.querySelector('#loading-message-audio').style.display = 'block';
-        // Nascondi la scritta "Loading..." dopo 30 secondi
+        // Nascondi la scritta "Loading..." dopo 20 secondi
         setTimeout(function () {
             document.querySelector('#loading-message-audio').style.display = 'none';
         }, 20000); // 20000 millisecondi corrispondono a 20 secondi
+
+        window.dataLayer.push({
+            'event': 'button_click',
+            'button_name': 'download_audio',
+            'click_time': new Date().getTime()
+        });
     });
+
 </script>
+
 
 
 
