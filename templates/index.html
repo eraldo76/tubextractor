@@ -155,20 +155,24 @@
   <!-- Custom script -->
   <script>
     function get_youtube_video_id(url) {
-    var video_id;
-    if (url.includes('youtu.be')) {
-        // Handle https://youtu.be/<video_id> format
-        video_id = url.split('youtu.be/')[1];
-    } else {
-        // Handle https://www.youtube.com/watch?v=<video_id> format
-        video_id = url.split('v=')[1];
-        var ampersandPosition = video_id.indexOf('&');
-        if (ampersandPosition != -1) {
-            video_id = video_id.substring(0, ampersandPosition);
+        var video_id;
+        if (url.includes('youtu.be')) {
+            // Handle https://youtu.be/<video_id> format
+            video_id = url.split('youtu.be/')[1];
+        } else {
+            // Handle https://www.youtube.com/watch?v=<video_id> format
+            video_id = url.split('v=')[1];
+            var ampersandPosition = video_id.indexOf('&');
+            if (ampersandPosition != -1) {
+                video_id = video_id.substring(0, ampersandPosition);
+            }
         }
+        return video_id;
     }
-    return video_id;
-}
+
+    var videoId;
+    var loadingMessage = document.querySelector('#loading-message');
+    var downloadButton = document.querySelector('#download-button');
 
     document.querySelector('.js-ajax-form').addEventListener('submit', function (event) {
         event.preventDefault();
@@ -178,28 +182,26 @@
         document.querySelector('#tags-textarea').value = '';
 
         var loader = document.querySelector('#loader');
-        var loadingMessage = document.querySelector('#loading-message');
-        var downloadButton = document.querySelector('#download-button');
         loader.style.display = 'block';
         loadingMessage.style.display = 'none'; // Hide the loading message
         downloadButton.disabled = true;
 
         var videoUrl = document.querySelector('input[name="video_id"]').value;
-        var videoId = get_youtube_video_id(videoUrl);
+        videoId = get_youtube_video_id(videoUrl);
 
-       // Push the URL to dataLayer
+        // Push the URL to dataLayer
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
-          'event': 'video_url_entered',
-          'video_url': videoUrl
+            'event': 'video_url_entered',
+            'video_url': videoUrl
         });
 
         fetch('/get_video_info', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({video_id: videoId})
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({video_id: videoId})
         })
             .then(function (response) {
                 loader.style.display = 'none';
@@ -218,7 +220,7 @@
                 document.querySelector('#channel-title').textContent = 'POSTED BY: ' + data.channel_title;
                 document.querySelector('#thumbnail-img').src = data.thumbnail;
 
-               // Populate the formats dropdown
+                // Populate the formats dropdown
                 var formatSelect = document.querySelector('#format-select');
                 formatSelect.innerHTML = '';
                 for (var i = 0; i < data.formats.length; i++) {
@@ -232,20 +234,8 @@
                 }
 
                 // Add the download button's click event
-                downloadButton.addEventListener('click', function () {
-                    // Get the selected format
-                    var selectedFormat = document.querySelector('#format-select').value;
-                    // Show the loading message
-                    loadingMessage.style.display = 'block';
-                    downloadButton.disabled = true; // Disable the download button during the download process
-                    // Redirect to the download URL
-                    window.location.href = '/download_video/' + selectedFormat + '?video_id=' + videoId;
-                    // Enable the download button after a short delay (adjust the delay as needed)
-                    setTimeout(function () {
-                        loadingMessage.style.display = 'none'; // Hide the loading message after the download
-                        downloadButton.disabled = false;
-                    }, 1000);
-                });
+                downloadButton.removeEventListener('click', handleDownloadButtonClick);
+                downloadButton.addEventListener('click', handleDownloadButtonClick);
 
                 // Show the results section
                 document.querySelector('#video-info').style.display = 'block';
@@ -262,6 +252,31 @@
                 downloadButton.disabled = false; // Enable the download button in case of error
             });
     });
+
+    function handleDownloadButtonClick() {
+        // Get the selected format
+        var selectedFormat = document.querySelector('#format-select').value;
+        if (!selectedFormat) return; // If no format is selected, do nothing
+        // Show the loading message
+        loadingMessage.style.display = 'block';
+        downloadButton.disabled = true; // Disable the download button during the download process
+
+        // Push the selected format to dataLayer
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'download_button_clicked',
+            'selected_format': selectedFormat,
+            'click_time': new Date().getTime()
+        });
+
+        // Redirect to the download URL
+        window.location.href = '/download_video/' + selectedFormat + '?video_id=' + videoId;
+        // Enable the download button after a short delay (adjust the delay as needed)
+        setTimeout(function () {
+            loadingMessage.style.display = 'none'; // Hide the loading message after the download
+            downloadButton.disabled = false;
+        }, 1000);
+    }
 
     // Add the event listeners for copying the transcript and tags
     document.querySelector('#copy-transcription-btn').addEventListener('click', function () {
@@ -284,54 +299,17 @@
         document.body.removeChild(textarea);
         alert('Text copied to clipboard!');
     }
- // Add the event listeners for audio
+
+    // Add the event listeners for audio
     document.querySelector('#download-audio').addEventListener('click', function () {
-    document.querySelector('#loading-message-audio').style.display = 'block';
-   // Nascondi la scritta "Loading..." dopo 30 secondi
-   setTimeout(function () {
-    document.querySelector('#loading-message-audio').style.display = 'none';
-  }, 15000); // 15000 millisecondi corrispondono a 15 secondi
-
-});
-   // Aggiungi i listener di eventi per ogni pulsante
-document.querySelector('#download-button').addEventListener('click', function () {
- 
-
-  window.dataLayer.push({
-    'event': 'button_click',
-    'button_name': 'download_video',
-    'click_time': new Date().getTime(),
-    'selected_format': selectedFormat
-  });
-});
-
-
-  document.querySelector('#copy-transcription-btn').addEventListener('click', function () {
-      window.dataLayer.push({
-          'event': 'button_click',
-          'button_name': 'copy_transcription',
-          'click_time': new Date().getTime()
-      });
-  });
-
-  document.querySelector('#copy-tags-btn').addEventListener('click', function () {
-      window.dataLayer.push({
-          'event': 'button_click',
-          'button_name': 'copy_tags',
-          'click_time': new Date().getTime()
-      });
-  });
-
-  document.querySelector('#download-audio').addEventListener('click', function () {
-      window.dataLayer.push({
-          'event': 'button_click',
-          'button_name': 'download_audio',
-          'click_time': new Date().getTime()
-      });
-  });
-  
-
+        document.querySelector('#loading-message-audio').style.display = 'block';
+        // Nascondi la scritta "Loading..." dopo 30 secondi
+        setTimeout(function () {
+            document.querySelector('#loading-message-audio').style.display = 'none';
+        }, 20000); // 20000 millisecondi corrispondono a 20 secondi
+    });
 </script>
+
 
 
 
