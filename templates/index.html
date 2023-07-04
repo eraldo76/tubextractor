@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <meta name="description" content="Experience the power of TubExtractor.com - your comprehensive, free online tool for YouTube content. Extract and download video transcripts, tags, video title, and channel information or get the video itself in your preferred format. Ideal for content creators, SEO specialists, video enthusiasts, and those in need of offline access to their favorite videos!">
+
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -12,14 +14,12 @@
   <meta charset="utf-8">
   <title>TubExtractor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900&family=DM+Sans:wght@100;200;300;400;500;600;700;800;900&subset=latin&display=swap" rel="stylesheet" id="sf-google-fonts">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}">
   <!--font Style -->
   <style>
     body.font-family {
@@ -149,7 +149,8 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"
     data-integrity="38d870e9c3c4e532551b530706abb811"></script>
-
+<!--fontawesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <!-- Custom script -->
   <script>
     function get_youtube_video_id(url) {
