@@ -249,6 +249,20 @@ def sitemap():
     response = Response(sitemap_xml, mimetype='application/xml')
     return response
 
+# privacy-policy
+
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy-policy.html')
+
+# terms-of-service
+
+
+@app.route('/terms-of-service')
+def privacy():
+    return render_template('terms-of-service.html')
+
 
 # main
 if __name__ == "__main__":
