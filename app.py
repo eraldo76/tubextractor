@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_file, session
+from flask import Flask, render_template, request, jsonify, send_file, session, Response
 from flask_session import Session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -239,6 +239,16 @@ def download_audio():
 
 # Initialize Flask-Minify
 minify(app=app)
+
+# sitemap
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    sitemap_xml = render_template('sitemap.xml')
+    response = Response(sitemap_xml, mimetype='application/xml')
+    return response
+
 
 # main
 if __name__ == "__main__":
