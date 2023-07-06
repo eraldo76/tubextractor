@@ -15,7 +15,7 @@ import json
 import os
 import isodate
 from flask_minify import minify
-
+# FLASK_APP=app.py FLASK_DEBUG=true flask run
 app = Flask(__name__)
 
 # Configure the session

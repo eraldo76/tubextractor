@@ -37,11 +37,14 @@
   <!-- Google Fonts -->
   <link rel="preload" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}" as="style">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}" media="print" onload="this.media='all'">
-   <!--font Style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fontfamily_roboto.css') }}" media="print" onload="this.media='all'">
+    
+  <!--font Style -->
   <style>
     body.font-family {
       font-family: 'DM Sans', sans-serif;
     }
+    
     .btn-pink-moon {
     background: #ec008c;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */
@@ -62,15 +65,16 @@
   
 </head>
 
-<body class="font-family">
+<body class="font-family bg-dark text-light">
   <section class="text-center">
     <div class="container p-1 mb-5">
       <div class="row justify-content-center text-md-center">
         <div class="col-lg-10 col-xl-8 mb-0">
           <img src="{{ url_for('static', filename='img/tubextractor.png') }}" alt="logo Tubextractor" width="200px" height="200px">
-          <h1>
-            TubExtractor
-          </h1>
+          <h1 style="font-family: 'Roboto', sans-serif; font-weight: bold;">
+            TubeXtractor
+        </h1>
+        
         </div>
         <div class="col-md-9 col-lg-7 col-xl-6 col-xxl-5 mb-10">
           
@@ -94,23 +98,35 @@
         </div>
     </form>
       <div id="loader" style="display: none;">
-        <p class="h4 m-5">loading...</p>
+        <div class="d-flex justify-content-center">
+        <div class="spinner-grow spinner-grow-sm text-danger m-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow spinner-grow-sm text-danger m-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow spinner-grow-sm text-danger m-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+        </div>
           </div>
           <p id="error-message" style="color: red;"></p>
 
       </div>
     </section>
+
+
 <br>
       <section id="video-info" style="display: none;">
-        <div class="container bg-dark text-light p-5 rounded-3">
+        <div class="container shadow-lg p-3 mb-5 bg-body rounded">
           <div class="row mb-5">
             <div class="col-sm-8 col-lg-4 mb-3">
               <img id="thumbnail-img" src="" alt="video Thumbnail">
               </div>
             <div  class="col-sm-4 col-lg-8"> 
-              <h2 id="video-title" class="h3 mb-12 w-100"></h2>
-              <p id="channel-title"></p>
-              <p class="mb-2"><strong>Duration:</strong> <span id="video-duration-value"></span></p>
+              <h2 id="video-title" class="h3 mb-12 w-100 text-dark"></h2>
+              <p id="channel-title" class="text-dark"></p>
+              <p class="mb-2 text-dark"><strong>Duration:</strong> <span id="video-duration-value" class="text-dark"></span></p>
               <select id="format-select" class="form-select p-3">
                 {% for format in video_info.formats %}
                 <option value="{{ format.format_id }}">{{ format.ext }} - {{ format.format_note }}</option>
@@ -146,9 +162,9 @@
           <section id="audio-info" style="display: none;">
             <div class="container bg-light text-dark p-5 rounded-3">
               <div class="row mb-5">
-                <div class="col-sm-8 col-lg-4 mb-3">
+                <div class="d-flex justify-content-center align-items-center col-sm-8 col-lg-4 mb-3">
                   <img src="{{ url_for('static', filename='img/tubextractor_mp3.png') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
-                                  </div>
+              </div>
                 <div  class="col-sm-4 col-lg-8"> 
                   <h2 class="h3 mb-12 w-100"> Video to mp3</h2>
                   <p class="lead mb-3">Experience seamless conversion of your favorite YouTube videos to high-quality MP3 audio files. Perfect for offline listening, podcast creation, or any other audio-focused project. Start your audio adventure with TubExtractor.</p>
@@ -162,6 +178,380 @@
       </div>
     </div>
   </section>
+
+  <!-- section how to works-->
+
+  <section class="text-center">
+    <div class="container p-1 mt-5">
+      <div class="row justify-content-center text-md-center">
+        <div class="col-lg-10 col-xl-8 mb-0">
+      <h2 class="h2"> Welcome to TubeXtractor, your one-stop solution for all your YouTube needs. </h2>
+      <p class="lead m-3">With TubeXtractor, you can seamlessly download a YouTube video, transform YouTube videos into MP3 files, and even extract a video's transcript and tags.</p>
+    </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-lg-4 mt-5 p-2">
+        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_1.webp') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+             <p class="h6">Locate the YouTube video you're interested in and copy its URL.<br>Please, copy youtube link like this:<br>https://www.youtube.com/watch?v=ABC123</p>
+      </div>
+      <div class="col-lg-4 mt-5 p-2">
+        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_2.webp') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+        <p class="h6">Back on the TubExtractor page, paste the YouTube video URL into the input field provided and then click the button "GET INFO"
+
+        </p>
+      </div>
+      <div class="col-lg-4 mt-5 p-2">
+        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_3.webp') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+        <p class="h6">Upon completion, the following information will be displayed:
+
+         <ul class="list-unstyled">
+          <li>A selection of downloadable video formats for your chosen YouTube video.</li>
+          <li>The tags associated with the YouTube video.</li>  
+            <li>A transcript of the video content.</li>
+            <li>An option to download the video's audio in MP3 format.</li>
+          </ul> 
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- end section How to works-->
+
+<!-- Section explain-->
+<section>
+  <div class="container p-1 mt-5">
+
+<!-- How to download video-->
+    <div id="youtube_download_video" class="row  border-top">
+          <div class="clearfix">
+            
+            <img src="{{ url_for('static', filename='img/youtube_video_download.webp') }}" alt="icon tags Tubextractor" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+
+        <h2 class="text-center text-md-start m-3 ">How to download a video</h2>
+        <p>
+          Are you looking for a convenient way to download YouTube videos and watch them offline? TubExtractor has got you covered. Here's how to use TubExtractor to download YouTube videos:
+ </p>
+ <ul>
+  <ol class="list-group-numbered m-0">
+    <li class=" d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Find the YouTube video</div>
+        Go to YouTube and locate the video you want to download.
+      </div>
+     
+    </li>
+        <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Copy the video URL</div>
+        Copy the URL of the YouTube video you wish to download.
+      </div>      
+    </li>
+    <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Access TubExtractor</div>
+        Paste the video URL into the designated field on TubExtractor's homepage and then click on Get Info button.
+      </div>      
+    </li>
+    <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Select the desired format</div>
+        Choose the video format you prefer for your download and click the button.
+      </div>      
+    </li>
+    <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Save the video and enjoy</div>
+        TubExtractor will automatically start the download process, and the video will be saved directly to your device!
+      </div>      
+    </li>
+  </ol>
+<br>
+ </ul>
+ <h5 class="m-2">Why Use TubExtractor to Download YouTube Videos</h5>
+
+ <ul>
+  <ol class="list-group m-0">
+    <li class=" d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold text-uppercase">Offline viewing</div>
+        Download your favorite YouTube videos and watch them without an internet connection.
+      </div>     
+    </li>
+        <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold text-uppercase">Easy and efficient</div>
+        TubExtractor simplifies the downloading process, making it quick and hassle-free.<br>
+        </div>      
+    </li>
+    <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold text-uppercase">Versatile formats</div>
+        Choose from a wide range of video formats to ensure compatibility with your device.
+   </div>      
+    </li>
+  </ol>
+ </ul>
+
+      </div>
+    </div>
+
+    <!-- Video to Mp3-->
+    <div id="youtube_video_to_mp3" class="row  border-top">
+      <div class="clearfix">
+        
+        <img src="{{ url_for('static', filename='img/youtube_video_to_mp3.webp') }}" alt="icon tags Tubextractor" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+
+    <h2 class="text-center text-md-start m-3">How to Use TubExtractor to Download MP3 from YouTube Videos</h2>
+    <p>
+      Do you want to enjoy the audio from your favorite YouTube videos on the go? TubExtractor allows you to convert YouTube videos to MP3 audio files easily. Here's how:</p>
+<ul>
+<ol class="list-group-numbered m-0">
+<li class=" d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Find the YouTube video</div>
+    Locate the YouTube video you wish to convert to MP3.
+  </div>
+ 
+</li>
+    <li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Copy the video URL</div>
+    Copy the URL of the YouTube video you wish to download.
+  </div>      
+</li>
+<li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Access TubExtractor</div>
+    Paste the video URL into the designated field on TubExtractor's homepage and then click on Get Info button.
+  </div>      
+</li>
+<li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Convert to MP3</div>
+    Click on the "Download to MP3" button to initiate the conversion process. TubExtractor will extract the audio from the YouTube video and generate the MP3 file.
+  </div>      
+</li>
+</ol>
+<br>
+</ul>
+<h5 class="m-2">Why Use TubExtractor to Download MP3 from YouTube Videos:</h5>
+
+<ul>
+<ol class="list-group m-0">
+<li class=" d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold text-uppercase">Portable audio experience</div>
+    Convert YouTube videos to MP3 and enjoy your favorite content in audio format on any device, even offline. </div>     
+</li>
+    <li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold text-uppercase">Podcast creation and audio projects</div>
+    Utilize the MP3 files for podcasting, audio projects, or background music without the need for video playback.</div>      
+</li>
+<li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold text-uppercase">Convenience and versatility</div>
+    TubExtractor provides a user-friendly platform for quickly converting YouTube videos to high-quality MP3 audio files, offering flexibility and convenience in consuming content.
+</div>      
+</li>
+</ol>
+</ul>
+
+  </div>
+</div>
+<!-- How to download tags-->
+
+    <div id="how_to_get_youtube_tags" class="row mt-5  border-top">
+      <div class="clearfix">
+        
+        <img src="{{ url_for('static', filename='img/tags_youtube_video.webp') }}" alt="tags youtube video" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+
+    <h2 class="text-center text-md-start m-3">How to Use TubExtractor to Download YouTube Tags</h2>
+    <p>
+      YouTube tags play a vital role in optimizing your video's discoverability. TubExtractor enables you to download YouTube tags effortlessly. Here's how:</p>
+<ul>
+<ol class="list-group-numbered m-0">
+<li class=" d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Find the YouTube video</div>
+     Identify the YouTube video from which you want to extract the tags.
+  </div>
+ 
+</li>
+    <li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Copy the video URL</div>
+    Copy the URL of the YouTube video you wish to download.
+  </div>      
+</li>
+<li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Access TubExtractor</div>
+    Paste the URL of the YouTube video into the provided field on TubExtractor's homepage and click on "Get Info".
+  </div>      
+</li>
+<li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Extract the tags</div>
+    Once you have obtained the video information, including the tags, they will be displayed in a textarea. 
+    You can conveniently copy the tags by clicking on the "COPY TAGS" button</li>
+<li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">Add your tags</div>
+    Additionally, if you want to add more tags manually, you can do so and easily copy them by clicking the same "COPY TAGS" button. This allows you to optimize your video's discoverability and enhance your content strategy with relevant and effective tags. </div>      
+</li>
+</ol>
+<br>
+</ul>
+<h5 class="m-2">Why Use TubExtractor to Download YouTube Tags</h5>
+<ul>
+  <ol class="list-group m-0">
+    <li class=" d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold text-uppercase">SEO optimization</div>
+        Leverage popular tags used in successful YouTube videos to enhance your own video's visibility and attract a wider audience. </div>     
+    </li>
+        <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold text-uppercase">Time-saving</div>
+        TubExtractor eliminates the need for manual tag research, providing you with relevant tags directly from YouTube videos. </div>      
+    </li>
+    <li class="d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold text-uppercase">Competitive advantage</div>
+        Gain insights into the tags used by top-performing videos in your niche and incorporate them into your content strategy.</div>      
+    </li>
+  </ol>
+ </ul>
+  </div>
+</div>
+
+<!-- How to download transcript-->
+
+<div id="how_to_get_youtube_transcript" class="row mt-5  border-top">
+  <div class="clearfix">
+    
+    <img src="{{ url_for('static', filename='img/transcript_youtube_video.webp') }}" alt="Transcript youtube video" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+
+<h2 class="text-center text-md-start m-3">How to Use TubExtractor to Download YouTube Transcript</h2>
+<p>
+  YouTube video transcripts are valuable for content creators, researchers, and accessibility purposes. TubExtractor allows you to easily download accurate transcripts from any YouTube video. Here's how:<ul>
+<ol class="list-group-numbered m-0">
+<li class=" d-flex justify-content-between align-items-start">
+<div class="ms-2 me-auto">
+<div class="fw-bold">Locate the YouTube video</div>
+Identify the YouTube video for which you need the transcript.
+</div>
+
+</li>
+<li class="d-flex justify-content-between align-items-start">
+<div class="ms-2 me-auto">
+<div class="fw-bold">Copy the video URL</div>
+Copy the URL of the YouTube video you wish to download the youtube transcript video.
+</div>      
+</li>
+<li class="d-flex justify-content-between align-items-start">
+<div class="ms-2 me-auto">
+<div class="fw-bold">Access TubExtractor</div>
+Paste the URL of the YouTube video into the provided field on TubExtractor's homepage and click on "Get Info".
+</div>      
+</li>
+<li class="d-flex justify-content-between align-items-start">
+<div class="ms-2 me-auto">
+<div class="fw-bold">Extract the tags</div>
+Once you have obtained the video information, including the transcription, they will be displayed in a textarea. 
+You can conveniently copy the transcription by clicking on the "COPY TRANSCRIPTION" button</li>
+</ol>
+<br>
+</ul>
+<h5 class="m-2">Why Use TubExtractor to Download YouTube transcription</h5>
+<ul>
+<ol class="list-group m-0">
+<li class=" d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold text-uppercase">Accessibility and inclusivity</div>
+    Transcripts provide accessibility to individuals with hearing impairments or language barriers, making your content more inclusive.</li>
+    <li class="d-flex justify-content-between align-items-start">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold text-uppercase">Content Repurposing</div>
+    Downloaded YouTube transcripts can be repurposed into various forms of content. You can transform the transcript into blog posts, articles, or social media captions, maximizing the reach and impact of your video content.</li>
+
+</ol>
+</ul>
+</div>
+</div>
+
+
+
+
+
+
+  </div>
+</section>
+
+<!-- End Section explain -->
+
+<!-- footer section-->
+<section>
+  <div class="container">
+    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+      <div class="col mb-3">
+     
+          <img src="{{ url_for('static', filename='img/tubextractor.png') }}" alt="logo Tubextractor" width="200px" height="200px"> 
+        <p class="text-body-secondary">© TubeXtractor.com 2023</p>
+      </div>
+  
+       <div class="col mb-3">
+        <h5>Youtube Download Video</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">How to download youtube video</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">youtube download</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">download a youtube video</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">save youtube</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">youtube videos downloader</a></li>
+        </ul>
+      </div>
+  
+      <div class="col mb-3">
+        <h5>Video to mp3</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">youtube to mp3</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">mp3 converter</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">best free mp3 converter</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">free youtube to mp3 converter</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">Video to mp3</a></li>
+        </ul>
+      </div>
+  
+      <div class="col mb-3">
+        <h5>Youtube Transcript</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">transcript youtube</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">transcription on youtube</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">transcript youtube video</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">youtube transcript extractor</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">video transcript youtube</a></li>
+        </ul>
+      </div>
+      <div class="col mb-3">
+        <h5>Youtube Tags</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">youtube tags extractor</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">tags in youtube</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">youtube tagging</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">youtube tag</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">tags youtube video</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+</section>
+
+<!-- end footer-->
+
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"
