@@ -15,8 +15,12 @@ import json
 import os
 import isodate
 from flask_minify import minify
+
 # FLASK_APP=app.py FLASK_DEBUG=true flask run
 app = Flask(__name__)
+
+# Initialize Flask-Minify
+minify(app=app)
 
 # Configure the session
 SESSION_TYPE = 'filesystem'
@@ -236,9 +240,6 @@ def download_audio():
             if os.path.exists(converted_filename):
                 os.remove(converted_filename)
 
-
-# Initialize Flask-Minify
-minify(app=app)
 
 # sitemap
 
