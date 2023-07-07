@@ -43,8 +43,10 @@
     
   <!--font Style -->
   <style>
-    body.font-family {
+    body {
       font-family: 'DM Sans', sans-serif;
+      background-color: #212529;
+      color: #fff;
     }
     
     .btn-pink-moon {
@@ -74,18 +76,23 @@
     border-radius: 5px;
     color: white;
   }
+  h1{
+    font-family: 'Roboto' sans-serif; 
+    font-weight: bold;
+  }
+  
   
   </style>
   
 </head>
 
-<body class="font-family bg-dark text-light">
+<body>
   <section class="text-center">
     <div class="container p-1 mb-5">
       <div class="row justify-content-center text-md-center">
         <div class="col-lg-10 col-xl-8 mb-0">
           <img src="{{ url_for('static', filename='img/tubextractor.png') }}" alt="logo Tubextractor" width="200px" height="200px">
-          <h1 style="font-family: 'Roboto', sans-serif; font-weight: bold;">
+          <h1>
             TubeXtractor
         </h1>
         
@@ -199,7 +206,7 @@
     <div class="container p-1 mt-5">
       <div class="row justify-content-center text-md-center">
         <div class="col-lg-10 col-xl-8 mb-0">
-      <h2 class="h2"> Welcome to TubeXtractor, your one-stop solution for all your YouTube needs. </h2>
+      <h2> Welcome to TubeXtractor, your one-stop solution for all your YouTube needs. </h2>
       <p class="lead m-3">With TubeXtractor, you can seamlessly download a YouTube video, transform YouTube videos into MP3 files, and even extract a video's transcript and tags.</p>
     </div>
     </div>
