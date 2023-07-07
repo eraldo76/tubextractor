@@ -33,8 +33,10 @@
  
   
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" media="screen">
- <!-- Google Fonts -->
+  <link rel="preload" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"></noscript>
+
+  <!-- Google Fonts -->
   <link rel="preload" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}" as="style">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fontfamily_dm.css') }}" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/fontfamily_roboto.css') }}" media="print" onload="this.media='all'">
@@ -279,8 +281,8 @@
       </div>      
     </li>
   </ol>
-<br>
  </ul>
+ <br>
  <h5 class="m-2">Why Use TubExtractor to Download YouTube Videos</h5>
 
  <ul>
@@ -346,8 +348,8 @@
   </div>      
 </li>
 </ol>
-<br>
 </ul>
+<br>
 <h5 class="m-2">Why Use TubExtractor to Download MP3 from YouTube Videos:</h5>
 
 <ul>
@@ -415,8 +417,8 @@
     Additionally, if you want to add more tags manually, you can do so and easily copy them by clicking the same "COPY TAGS" button. This allows you to optimize your video's discoverability and enhance your content strategy with relevant and effective tags. </div>      
 </li>
 </ol>
-<br>
 </ul>
+<br>
 <h5 class="m-2">Why Use TubExtractor to Download YouTube Tags</h5>
 <ul>
   <ol class="list-group m-0">
