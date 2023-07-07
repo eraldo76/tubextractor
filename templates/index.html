@@ -60,6 +60,18 @@
     .col-12 {
     max-width: 100%;
   }
+
+  a {
+     color: white;
+     text-decoration: none;
+  }
+
+
+  a:hover {
+    background-color: #666666;
+    border-radius: 5px;
+    color: white;
+  }
   
   </style>
   
@@ -147,12 +159,12 @@
           <section class="m-5" id="video-info2" style="display: none;">
             <div class="row m-5 justify-content-center">
               <div class="col-md-6 col-sm-12 text-center mb-3">
-                <img src="{{ url_for('static', filename='img/paper-writing.svg') }}" alt="icon transcript Tubextractor" width="64px" class="mb-3">
+                <img src="{{ url_for('static', filename='img/paper-writing.svg') }}" alt="icon transcript Tubextractor" width="64px" height="64px" class="mb-3">
                 <textarea id="transcription-textarea" class="form-control mb-2 w-100" rows="5"></textarea>
                 <button class="btn btn-pink-moon w-100 p-3" id="copy-transcription-btn">Copy Transcript</button>
               </div>
               <div class="col-md-6 col-sm-12 text-center">
-                <img src="{{ url_for('static', filename='img/tags.svg') }}" alt="icon tags Tubextractor" width="64px" class="mb-3">
+                <img src="{{ url_for('static', filename='img/tags.svg') }}" alt="icon tags Tubextractor" width="64px" height="64px" class="mb-3">
                 <textarea id="tags-textarea" class="form-control mb-2 w-100" rows="5"></textarea>
                 <button class="btn btn-pink-moon w-100 p-3" id="copy-tags-btn">Copy Tags</button>
               </div>
@@ -163,7 +175,7 @@
             <div class="container bg-light text-dark p-5 rounded-3">
               <div class="row mb-5">
                 <div class="d-flex justify-content-center align-items-center col-sm-8 col-lg-4 mb-3">
-                  <img src="{{ url_for('static', filename='img/tubextractor_mp3.png') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+                  <img src="{{ url_for('static', filename='img/tubextractor_mp3.png') }}" alt="icon tags Tubextractor" width="300px" height="300px" class="mb-3">
               </div>
                 <div  class="col-sm-4 col-lg-8"> 
                   <h2 class="h3 mb-12 w-100"> Video to mp3</h2>
@@ -192,17 +204,17 @@
 
     <div class="row mt-3">
       <div class="col-lg-4 mt-5 p-2">
-        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_1.webp') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_1.webp') }}" alt="icon tags Tubextractor" width="300px" height="300px" class="mb-3">
              <p class="h6">Locate the YouTube video you're interested in and copy its URL.<br>Please, copy youtube link like this:<br>https://www.youtube.com/watch?v=ABC123</p>
       </div>
       <div class="col-lg-4 mt-5 p-2">
-        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_2.webp') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_2.webp') }}" alt="icon tags Tubextractor" width="300px" height="300px" class="mb-3">
         <p class="h6">Back on the TubExtractor page, paste the YouTube video URL into the input field provided and then click the button "GET INFO"
 
         </p>
       </div>
       <div class="col-lg-4 mt-5 p-2">
-        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_3.webp') }}" alt="icon tags Tubextractor" width="300px" class="mb-3">
+        <img src="{{ url_for('static', filename='img/how_to_download_video_youtube_3.webp') }}" alt="icon tags Tubextractor" width="300px" height="300px" class="mb-3">
         <p class="h6">Upon completion, the following information will be displayed:
 
          <ul class="list-unstyled">
@@ -227,7 +239,7 @@
     <div id="youtube_download_video" class="row  border-top">
           <div class="clearfix">
             
-            <img src="{{ url_for('static', filename='img/youtube_video_download.webp') }}" alt="icon tags Tubextractor" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+            <img src="{{ url_for('static', filename='img/youtube_video_download.webp') }}" alt="icon tags Tubextractor" width="300px" height="me-auto" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
 
         <h2 class="text-center text-md-start m-3 ">How to download a video</h2>
         <p>
@@ -301,7 +313,7 @@
     <div id="youtube_video_to_mp3" class="row  border-top">
       <div class="clearfix">
         
-        <img src="{{ url_for('static', filename='img/youtube_video_to_mp3.webp') }}" alt="icon tags Tubextractor" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+        <img src="{{ url_for('static', filename='img/youtube_video_to_mp3.webp') }}" alt="icon tags Tubextractor" width="300px" height="me-auto" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
 
     <h2 class="text-center text-md-start m-3">How to Use TubExtractor to Download MP3 from YouTube Videos</h2>
     <p>
@@ -366,7 +378,7 @@
     <div id="how_to_get_youtube_tags" class="row mt-5  border-top">
       <div class="clearfix">
         
-        <img src="{{ url_for('static', filename='img/tags_youtube_video.webp') }}" alt="tags youtube video" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+        <img src="{{ url_for('static', filename='img/tags_youtube_video.webp') }}" alt="tags youtube video" width="300px" height="me-auto" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
 
     <h2 class="text-center text-md-start m-3">How to Use TubExtractor to Download YouTube Tags</h2>
     <p>
@@ -433,7 +445,7 @@
 <div id="how_to_get_youtube_transcript" class="row mt-5  border-top">
   <div class="clearfix">
     
-    <img src="{{ url_for('static', filename='img/transcript_youtube_video.webp') }}" alt="Transcript youtube video" width="300px" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
+    <img src="{{ url_for('static', filename='img/transcript_youtube_video.webp') }}" alt="Transcript youtube video" width="300px" height="me-auto" class="col-md-6 float-md-end mb-3 ms-md-3 mx-auto d-block">
 
 <h2 class="text-center text-md-start m-3">How to Use TubExtractor to Download YouTube Transcript</h2>
 <p>
@@ -491,6 +503,37 @@ You can conveniently copy the transcription by clicking on the "COPY TRANSCRIPTI
   </div>
 </section>
 
+<!--Disclaimer-->
+<section class="container mt-5">
+  <div class="row">
+    <div class="col">
+      <h2 class="text-center">Disclaimer</h2>
+      <p>
+        The TubExtractor website provides a service for downloading or extracting content from YouTube videos. However, please note that TubExtractor does not own or control the rights to the videos or the content within them.
+      </p>
+      <p>
+        Our platform is designed to assist users in accessing and utilizing YouTube content for personal or non-commercial purposes. It is important to understand that the responsibility for complying with YouTube's terms of service, as well as applicable copyright laws and regulations, lies with the users.
+      </p>
+      <p>
+        We strongly encourage all users to respect the terms of service set forth by YouTube and to use any downloaded or extracted content in accordance with the applicable laws and regulations regarding copyright and intellectual property.
+      </p>
+      <p>
+        Please be aware that TubExtractor is an independent platform and is not affiliated or associated directly with YouTube. We do not endorse or support any copyright infringement or unauthorized use of YouTube content.
+      </p>
+      <p>
+        By using TubExtractor, you acknowledge and agree that you are solely responsible for any actions you take with the downloaded or extracted content, and you indemnify TubExtractor and its team from any legal consequences resulting from the misuse or violation of copyright laws or YouTube's terms of service.
+      </p>
+      <p>
+        If you have any concerns or questions regarding the usage of TubExtractor or the content provided, please refer to our Terms of Service and Privacy Policy for more information.
+      </p>
+      <p>
+        Remember, it is essential to exercise caution, respect intellectual property rights, and adhere to the regulations governing online content when using TubExtractor or any similar service.
+      </p>
+    </div>
+  </div>
+</section>
+
+
 <!-- End Section explain -->
 
 <!-- footer section-->
@@ -504,45 +547,45 @@ You can conveniently copy the transcription by clicking on the "COPY TRANSCRIPTI
       </div>
   
        <div class="col mb-3">
-        <h5>Youtube Download Video</h5>
+        <h5 class="text-uppercase">Youtube Download Video</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">How to download youtube video</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">youtube download</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">download a youtube video</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">save youtube</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_download_video" class="nav-link p-0 text-body-secondary">youtube videos downloader</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class=" p-0 ">How to download youtube video</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class=" p-0 ">youtube download</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class=" p-0 ">download a youtube video</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class=" p-0 ">save youtube</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_download_video" class=" p-0 ">youtube videos downloader</a></li>
         </ul>
       </div>
   
       <div class="col mb-3">
-        <h5>Video to mp3</h5>
+        <h5 class="text-uppercase">Video to mp3</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">youtube to mp3</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">mp3 converter</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">best free mp3 converter</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">free youtube to mp3 converter</a></li>
-          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="nav-link p-0 text-body-secondary">Video to mp3</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="p-0">youtube to mp3</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="p-0">mp3 converter</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="p-0">best free mp3 converter</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="p-0">free youtube to mp3 converter</a></li>
+          <li class="nav-item mb-2"><a href="#youtube_video_to_mp3" class="p-0">Video to mp3</a></li>
         </ul>
       </div>
   
       <div class="col mb-3">
-        <h5>Youtube Transcript</h5>
+        <h5 class="text-uppercase">Youtube Transcript</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">transcript youtube</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">transcription on youtube</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">transcript youtube video</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">youtube transcript extractor</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="nav-link p-0 text-body-secondary">video transcript youtube</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="p-0">transcript youtube</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="p-0">transcription on youtube</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="p-0">transcript youtube video</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="p-0">youtube transcript extractor</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_transcript" class="p-0">video transcript youtube</a></li>
         </ul>
       </div>
       <div class="col mb-3">
-        <h5>Youtube Tags</h5>
+        <h5 class="text-uppercase">Youtube Tags</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">youtube tags extractor</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">tags in youtube</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">youtube tagging</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">youtube tag</a></li>
-          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="nav-link p-0 text-body-secondary">tags youtube video</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="p-0">youtube tags extractor</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="p-0">tags in youtube</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="p-0">youtube tagging</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="p-0">youtube tag</a></li>
+          <li class="nav-item mb-2"><a href="#how_to_get_youtube_tags" class="p-0">tags youtube video</a></li>
         </ul>
       </div>
     </footer>
