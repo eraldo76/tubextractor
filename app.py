@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_file, session, Response
+from flask import Flask, render_template, request, jsonify, send_file, session, Response, send_from_directory
 from flask_session import Session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -241,14 +241,20 @@ def download_audio():
                 os.remove(converted_filename)
 
 
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
+
+
 # sitemap
 
 
-@app.route('/sitemap.xml')
-def sitemap():
-    sitemap_xml = render_template('sitemap.xml')
-    response = Response(sitemap_xml, mimetype='application/xml')
-    return response
+# @app.route('/sitemap.xml')
+# def sitemap():
+#     sitemap_xml = render_template('sitemap.xml')
+#     response = Response(sitemap_xml, mimetype='application/xml')
+#     return response
 
 # privacy-policy
 
