@@ -56,13 +56,16 @@ def index():
 @app.route('/get_video_info', methods=['POST'])
 def fetch_video_info():
     video_id_or_url = request.json.get('video_id')
+    video_id = None  # Initialize video_id here
     logging.debug(f"Fetching video info for ID or URL: {video_id_or_url}")
 
-    # Check if video_id_or_url is a URL and, if so, extract the video ID
-    if 'http' in video_id_or_url:
-        video_id = get_youtube_video_id(video_id_or_url)
-    else:
-        video_id = video_id_or_url
+    # Check if video_id_or_url is not None and, if so, proceed
+    if video_id_or_url is not None:
+        # Check if video_id_or_url is a URL and, if so, extract the video ID
+        if 'http' in video_id_or_url:
+            video_id = get_youtube_video_id(video_id_or_url)
+        else:
+            video_id = video_id_or_url
 
     logging.debug(f"Video ID: {video_id}")
 
@@ -85,12 +88,17 @@ def fetch_video_info():
             transcript = str(e)
             app.logger.error(f"Error getting transcript: {str(e)}")
         # We run the API request to get the video information
+        video_id = video_id.split('?')[0] if '?' in video_id else video_id
         api_url = f"https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id={video_id}&key={YOUTUBE_API_KEY}"
         response = requests.get(api_url)
         data = response.json()
 
         # print data json
         logging.info(json.dumps(data, indent=4))
+
+        # Check if data['items'] is empty
+        if not data['items']:
+            return jsonify({'error': 'No video information returned from YouTube API'})
 
         # We get the title
         title = data['items'][0]['snippet']['title']
@@ -159,6 +167,9 @@ def get_youtube_video_id(url):
             video_id = query.path.split('/')[2]
         elif query.path[:7] == '/embed/':
             video_id = query.path.split('/')[2]
+        elif query.path[:7] == '/shorts/':  # Add this condition
+            # Add this line to remove "?feature=share"
+            video_id = query.path.split('/')[2].split('?')[0]
 
     if video_id:
         logging.debug(f"Video ID: {video_id}")
