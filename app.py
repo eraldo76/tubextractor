@@ -5,6 +5,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 from settings import YOUTUBE_API_KEY, SECRET_KEY
+from werkzeug.middleware.proxy_fix import ProxyFix  # import ProxyFix
 import requests
 import logging
 import re
@@ -19,6 +20,9 @@ from flask_cdn import CDN
 
 # FLASK_APP=app.py FLASK_DEBUG=true flask run
 app = Flask(__name__)
+
+# Add the ProxyFix middleware
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)  # add this line
 
 # Initialize Flask-Minify
 minify(app=app)
