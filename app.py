@@ -15,12 +15,18 @@ import json
 import os
 import isodate
 from flask_minify import minify
+from flask_cdn import CDN
 
 # FLASK_APP=app.py FLASK_DEBUG=true flask run
 app = Flask(__name__)
 
 # Initialize Flask-Minify
 minify(app=app)
+
+# Initialize Flask-CDN
+# or 'dk1buhah37zjt.cloudfront.net' if you don't have HTTPS enabled
+app.config['CDN_DOMAIN'] = 'https://dk1buhah37zjt.cloudfront.net'
+cdn = CDN(app)
 
 # Configure the session
 SESSION_TYPE = 'filesystem'
