@@ -25,7 +25,7 @@ minify(app=app)
 
 # Initialize Flask-CDN
 # or 'dk1buhah37zjt.cloudfront.net' if you don't have HTTPS enabled
-app.config['CDN_DOMAIN'] = 'dk1buhah37zjt.cloudfront.net'
+app.config['CDN_DOMAIN'] = 'https://dk1buhah37zjt.cloudfront.net'
 cdn = CDN(app)
 
 # Configure the session
