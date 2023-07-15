@@ -28,8 +28,8 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)  # add this line
 minify(app=app)
 
 # Initialize Flask-CDN
-# or 'dk1buhah37zjt.cloudfront.net' if you don't have HTTPS enabled
 app.config['CDN_DOMAIN'] = 'dk1buhah37zjt.cloudfront.net'
+app.config['CDN_HTTPS'] = True  # Force Flask-CDN to use HTTPS
 cdn = CDN(app)
 
 # Configure the session
