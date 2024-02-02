@@ -1,3 +1,3 @@
-YOUTUBE_API_KEY = "AIzaSyA5iN9hP6gydfkEiieQ_iXFLanWsRTM5Mk"
-OPENAI_APY_KEY = "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"
-SECRET_KEY = "LAMIACHIAVESEgreta2023"
+YOUTUBE_API_KEY = "youryoutubeapikey"
+OPENAI_APY_KEY = "your api key"
+SECRET_KEY = "xxcccvvvb"
